@@ -2,6 +2,7 @@ import '../index.css'
 import react from 'react'
 import {useState} from 'react'
 import axios from 'axios'
+import {NavLink} from 'react-router-dom'
 
 const RegistrationForm=()=>{
    const[formdata, setFormdata]=useState({
@@ -73,7 +74,9 @@ const RegistrationForm=()=>{
 
     <div className="flex justify-center">
       <button type="submit" className="bg-white text-pink-500 px-4 mr-4 py-1 rounded border hover:bg-pink-100">Submit</button>
-      <button type="button" className="bg-white text-pink-500 px-4 ml-5 py-1 rounded border hover:bg-pink-100">Login</button>
+      <NavLink to='/login'>
+      <button  type="button" className="bg-white text-pink-500 px-4 ml-5 py-1 rounded border hover:bg-pink-100">Login</button>
+      </NavLink>
     </div>
     
   </form>

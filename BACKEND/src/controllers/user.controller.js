@@ -58,7 +58,7 @@ const login=async(req, res)=>{
     send res
      */
     const{email,username,password}=req.body;
-    if(!(email||username||password)){
+    if(!(email||username)){
         return res.status(404).json({
             success:false,
             message:"Enter the information"
@@ -68,13 +68,14 @@ const login=async(req, res)=>{
     const user=await User.findOne({
         $or:[{username},{email}]
     })
+
     if(!user){
         return res.status(404).json({
             success:false,
             message:"unauthorized access"
         })
     }
-    const correctPassword=await User.isPasswordCorrect(password);
+    const correctPassword=await user.isPasswordCorrect(password);
     if(!correctPassword){
         return res.status(404).json({
             success:false,
