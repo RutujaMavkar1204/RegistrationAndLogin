@@ -1,4 +1,17 @@
 import {User} from '../models/user.model.js'
+
+
+const generateAccessAndRefreshTokens=async(userId)=>{
+    const user=await User.findById(userId)
+    const accessToken=await user.generateAccessTokens();
+    const refreshToken=await user.generateRefreshTokens();
+
+    user.refreshToken=refreshToken;
+    await user.save({validateBeforeSave:false})
+
+
+    return{accessToken, refreshToken}
+}
 const registration=async(req, res)=>{
     /*
     1.get detail from user
@@ -34,8 +47,66 @@ const registration=async(req, res)=>{
         message: "User registered successfully",
     });
     
+}
+
+const login=async(req, res)=>{
+    /*
+    take info from body
+    check if info is get
+    check if user is present of that username or email
+    check for password if correct
+    send res
+     */
+    const{email,username,password}=req.body;
+    if(!(email||username||password)){
+        return res.status(404).json({
+            success:false,
+            message:"Enter the information"
+        })
+    }
+
+    const user=await User.findOne({
+        $or:[{username},{email}]
+    })
+    if(!user){
+        return res.status(404).json({
+            success:false,
+            message:"unauthorized access"
+        })
+    }
+    const correctPassword=await User.isPasswordCorrect(password);
+    if(!correctPassword){
+        return res.status(404).json({
+            success:false,
+            message:"Incorrect password"
+        })
+    }
+
+    const {accessToken, refreshToken}=await generateAccessAndRefreshTokens(user._id);
+    const loggedInUser=await User.findById(user._id).select("password refreshToken");
+    if(!loggedInUser){
+        return res.status(500).json({
+            success:false,
+            message:"something went wrong"
+        })
+    }
+    const options={
+        httpOnly:true,
+        secure:true
+    }
+    res
+    .status(200)
+    .cookie("accessToken",accessToken,options)
+    .cookie("refreshToken",refreshToken,options)
+    .json({
+        success:true,
+        message:'logged in Successfully'
+    })
 
 
 
 }
-export {registration}
+export {
+    registration,
+    login
+}

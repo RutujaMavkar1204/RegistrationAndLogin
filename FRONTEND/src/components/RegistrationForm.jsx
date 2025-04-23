@@ -35,23 +35,50 @@ const RegistrationForm=()=>{
 
     return(
         <>
-        <h1>Registration Form</h1>
+       
         
-        <form onSubmit={submit}>
-        <div className="form" >
-            <label>Name:</label>
-            <input name="name" value={formdata.name} onChange={handleChange} type="text" className="name" placeholder="name"/>
-            <label>Username</label>
-            <input name="username" value={formdata.username} onChange={handleChange} type="text" className="Username" placeholder="Username" />
-            <label>Email:</label>
-            <input name="email" value={formdata.email} onChange={handleChange} type="email" className="email" placeholder="email"/>
-            <label>Phone Number:</label>
-            <input name="phoneNumber" value={formdata.phoneNumber} onChange={handleChange} type="number"className="phonenumber" placeholder="phonenumber"/>
-            <label>Password:</label>
-            <input name="password" value={formdata.password} onChange={handleChange} type="password"className="password" placeholder="password"/>
-            <button type="submit" >Submit</button>
-            </div>
-        </form>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <form onSubmit={submit} className="w-full max-w-md p-6 bg-pink-400 rounded-lg border-2">
+    <h1 className="text-xl font-semibold text-center mb-4">Registration Form</h1>
+
+    <div className="mb-4">
+      <label className=" mb-1">Name:</label>
+      <input name="name" value={formdata.name} onChange={handleChange} type="text"
+             className="w-full px-2 py-1 rounded border" placeholder="name"/>
+    </div>
+
+    <div className="mb-4">
+      <label className=" mb-1">Username:</label>
+      <input name="username" value={formdata.username} onChange={handleChange} type="text"
+             className="w-full px-2 py-1 rounded border" placeholder="Username"/>
+    </div>
+
+    <div className="mb-4">
+      <label className=" mb-1">Email:</label>
+      <input name="email" value={formdata.email} onChange={handleChange} type="email"
+             className="w-full px-2 py-1 rounded border" placeholder="email"/>
+    </div>
+
+    <div className="mb-4">
+      <label className=" mb-1">Phone Number:</label>
+      <input name="phoneNumber" value={formdata.phoneNumber} onChange={handleChange} type="number"
+             className="w-full px-2 py-1 rounded border" placeholder="phonenumber"/>
+    </div>
+
+    <div className="mb-4">
+      <label className=" mb-1">Password:</label>
+      <input name="password" value={formdata.password} onChange={handleChange} type="password"
+             className="w-full px-2 py-1 rounded border" placeholder="password"/>
+    </div>
+
+    <div className="flex justify-center">
+      <button type="submit" className="bg-white text-pink-500 px-4 mr-4 py-1 rounded border hover:bg-pink-100">Submit</button>
+      <button type="button" className="bg-white text-pink-500 px-4 ml-5 py-1 rounded border hover:bg-pink-100">Login</button>
+    </div>
+    
+  </form>
+</div>
+
         </>
     );
    
